@@ -1,6 +1,6 @@
 from arrow import utcnow, get
 from bd.model import Session
-from .util import get_products, period_to_date, get_intervals, category
+from .util import  period_to_date, get_intervals
 from pprint import pprint
 
 name = 'Отчет по статье рас./прих. за период'

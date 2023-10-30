@@ -1,7 +1,7 @@
-from bd.model import Shop, Products, Documents, Employees, Message, Session
+from bd.model import Shop,  Documents, Session
 from arrow import utcnow, get
 from pprint import pprint
-from .util import get_products, period_to_date, get_intervals, get_shops_in
+from .util import  period_to_date, get_intervals, get_shops_in
 
 import telebot
 from typing import List, Tuple

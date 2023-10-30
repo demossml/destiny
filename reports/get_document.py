@@ -1,7 +1,7 @@
 from arrow import utcnow, get
 from bd.model import Session, Documents
 from pprint import pprint
-from .util import get_products, period_to_date, get_intervals, category
+from .util import  period_to_date, get_intervals
 import telebot
 from typing import List, Tuple
 

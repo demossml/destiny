@@ -3,7 +3,6 @@
 # Изменяет остатки цену закупки и продажи в моент регистраци документа
 
 from pprint import pprint
-from arrow import utcnow, get
 
 from bd.model import Session, Products, Documents
 

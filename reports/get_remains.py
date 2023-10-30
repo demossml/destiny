@@ -3,9 +3,8 @@
 # Изменяет остатки цену закупки и продажи в моент регистраци документа
 
 from pprint import pprint
-from arrow import utcnow, get
 
-from bd.model import Session, Products, Documents
+from bd.model import Session, Products
 
 # название кнопки меню
 name = 'Остатки товара'

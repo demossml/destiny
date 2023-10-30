@@ -50,12 +50,6 @@ def format_sell_groups(_dict):
     return _dict
 
 
-def get_products(session: Session, shop_id):
-    if session.employee.role == "CASHIER":
-        return Products.objects(shop_id__exact=shop_id, group__exact=True, uuid__nin=not_group)
-    if session.employee.role == "ADMIN":
-        return Products.objects(shop_id__exact=shop_id, group__exact=True)
-
 
 # 1 оклад 800₽ const
 # 2 набака за тт
@@ -237,57 +231,6 @@ def plan_sell(shops: dict, percent: int, bonus: int, since: str, until: str, gro
     return result_v
 
 
-# Собирает данные по зп
-def total_bonus(since: str, until: str, shops: dict, salary: int):
-    # 3 надбавка по итогам учета
-    employees_bonus = bonus_2(since, until, shops)[0]
-    # 2 набака за тт
-    shops_bonus = bonus_2(since, until, shops)[1]
-    # 4 процент за аксы
-    _aks = bonus(aks, 5, shops, since, until)
-    # 5 250₽ за выполнение плана
-    _plan_sell = plan_sell(shops, 7, 250, since, until, "bc9e7e4c-fdac-11ea-aaf2-2cf05d04be1d")
-    # 6 ₽ за проданный мотивационный товар
-    _sku_bonus = sku_bonus_(sku_bonus_group, shops, since, until)
-    # 7 ФИО продавца
-    _employees = bonus_2(since, until, shops)[2]
-    # Мороженое
-    _ice_cream = bonus(taba, 3, shops, since, until)
-    # pprint(employees_bonus)
-    # pprint(shops_bonus)
-    # pprint(_aks)
-    # pprint(_plan_sell)
-    # pprint(_sku_bonus)
-    # pprint(_employees)
-    result = {}
-    total_result = {}
-
-    for k, v in _employees.items():
-        result[k] = {'uuid продавца': v}
-    for k, v in employees_bonus.items():
-        result[k].update({'Надбавка по итогам учета': v})
-    for k, v in shops_bonus.items():
-        result[k].update({'Надбавка за тт': v})
-    for k, v in _aks.items():
-        result[k].update({'Процент за аксессуары': v})
-    for k, v in _plan_sell.items():
-        result[k].update({'Выполнение плана по FIZZY': v})
-    for k, v in _sku_bonus.items():
-        result[k].update({'Надбавка за проданный мотивационный товар': v})
-    for k, v in _ice_cream.items():
-        result[k].update({'Мороженое': v})
-    for k, v in result.items():
-        result[k].update({'Оклад': salary})
-
-    for k, v in result.items():
-        total = 0
-        for k1, v2 in v.items():
-            if k1 != 'uuid продавца':
-                total += v2
-        result[k].update({'Итого': total})
-        # result_ = sorted(result.items(), key=lambda x: x[1])
-    total_result[until] = result
-    return total_result, result
 
 
 def period_to_date(period: str) -> utcnow:
